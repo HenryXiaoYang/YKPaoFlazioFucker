@@ -94,7 +94,7 @@ func sendRequest(wg *sync.WaitGroup, clientID int) {
 
 func main() {
 	fmt.Println("让我们一起用假数据塞满黑客的数据库！✊")
-	fmt.Println("并发客户端数量:%d", concurrentClients)
+	fmt.Println(fmt.Sprintf("并发客户端数量:%d", concurrentClients))
 	fmt.Println("返回值成功为1则代表成功")
 	fmt.Println("3秒后开始发送请求...")
 	time.Sleep(3 * time.Second)
