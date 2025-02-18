@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"math/rand"
 	"net/http"
 	"net/url"
@@ -68,7 +67,7 @@ func sendRequest(wg *sync.WaitGroup, clientID int) {
 			strings.NewReader(data.Encode()),
 		)
 		if err != nil {
-			log.Printf("线程%d 错误:%v", clientID, err)
+			fmt.Println(fmt.Sprintf("线程%d 错误:%v", clientID, err))
 			continue
 		}
 
@@ -77,7 +76,7 @@ func sendRequest(wg *sync.WaitGroup, clientID int) {
 		// 发送请求
 		resp, err := client.Do(req)
 		if err != nil {
-			log.Printf("线程%d 错误:%v", clientID, err)
+			fmt.Println(fmt.Sprintf("线程%d 错误:%v", clientID, err))
 			continue
 		}
 
@@ -85,20 +84,21 @@ func sendRequest(wg *sync.WaitGroup, clientID int) {
 		body, err := ioutil.ReadAll(resp.Body)
 		resp.Body.Close()
 		if err != nil {
-			log.Printf("线程%d 错误:%v", clientID, err)
+			fmt.Println(fmt.Sprintf("线程%d 错误:%v", clientID, err))
 			continue
 		}
 
-		log.Printf("线程%d 随机用户名:%s 随机密码:%s 成功:%s", clientID, username, password, string(body))
+		fmt.Println(fmt.Sprintf("线程%d 随机用户名:%s 随机密码:%s 成功:%s", clientID, username, password, string(body)))
 	}
 }
 
 func main() {
-	log.Printf("让我们一起用假数据塞满黑客的数据库！✊")
-	log.Printf("并发客户端数量:%d", concurrentClients)
-	log.Printf("返回值成功为1则代表成功")
-	log.Printf("3秒后开始发送请求...")
+	fmt.Println("让我们一起用假数据塞满黑客的数据库！✊")
+	fmt.Println("并发客户端数量:%d", concurrentClients)
+	fmt.Println("返回值成功为1则代表成功")
+	fmt.Println("3秒后开始发送请求...")
 	time.Sleep(3 * time.Second)
+	fmt.Println("开始发送请求...")
 
 	var wg sync.WaitGroup
 
