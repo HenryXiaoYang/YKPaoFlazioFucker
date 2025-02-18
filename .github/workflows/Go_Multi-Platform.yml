@@ -1,0 +1,136 @@
+name: Go Multi-Platform
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23.6'
+
+      - name: Install Garble
+        run: go install mvdan.cc/garble@latest
+
+      - name: Build
+        run: go build -v -o YKPaoFlazioFucker.exe -ldflags="-s -w -H=windowsgui" ./
+
+      - name: Test
+        run: go test -v ./...
+
+      - name: Push Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: YKPaoFlazioFucker-windows
+          path: YKPaoFlazioFucker.exe
+
+  build-macos-arm:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23.6'
+
+      - name: Install Garble
+        run: go install mvdan.cc/garble@latest
+
+      - name: Build
+        run: go build -v -o YKPaoFlazioFucker -ldflags="-s -w" ./
+
+      - name: Test
+        run: go test -v ./...
+
+      - name: Push Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: YKPaoFlazioFucker-macos-arm
+          path: YKPaoFlazioFucker
+
+  build-macos-amd64:
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23.6'
+
+      - name: Install Garble
+        run: go install mvdan.cc/garble@latest
+
+      - name: Build
+        run: go build -v -o YKPaoFlazioFucker -ldflags="-s -w" ./
+
+      - name: Test
+        run: go test -v ./...
+
+      - name: Push Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: YKPaoFlazioFucker-macos-amd64
+          path: YKPaoFlazioFucker
+
+  build-linux-amd64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23.6'
+
+      - name: Install Garble
+        run: go install mvdan.cc/garble@latest
+
+      - name: Build for Linux AMD64
+        run: go build -v -o YKPaoFlazioFucker -ldflags="-s -w" ./
+
+      - name: Test
+        run: go test -v ./...
+
+      - name: Push Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: YKPaoFlazioFucker-linux-amd64
+          path: YKPaoFlazioFucker
+
+  build-linux-arm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23.6'
+
+      - name: Install Garble
+        run: go install mvdan.cc/garble@latest
+
+      - name: Build for Linux ARM
+        run: |
+          export GOOS=linux
+          export GOARCH=arm64
+          go build -v -o YKPaoFlazioFucker -ldflags="-s -w" ./
+
+      - name: Test
+        run: go test -v ./...
+
+      - name: Push Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: YKPaoFlazioFucker-linux-arm
+          path: YKPaoFlazioFucker
