@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	concurrentClients = 20 // 并发客户端数量
+	concurrentClients = 10 // 并发客户端数量
 )
 
 // 线程安全的随机数生成器
@@ -94,6 +94,12 @@ func sendRequest(wg *sync.WaitGroup, clientID int) {
 }
 
 func main() {
+	log.Printf("让我们一起用假数据塞满黑客的数据库！✊")
+	log.Printf("并发客户端数量:%d", concurrentClients)
+	log.Printf("返回值成功为1则代表成功")
+	log.Printf("3秒后开始发送请求...")
+	time.Sleep(3 * time.Second)
+
 	var wg sync.WaitGroup
 
 	// 启动并发客户端
